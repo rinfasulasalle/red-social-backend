@@ -8,9 +8,9 @@ export class User {
   @Column({ unique: true })
   username: string;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
   password: string;
 
-  @Column()
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 }
