@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -7,28 +16,34 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
-  @Post()
-  create(@Body() createProfileDto: CreateProfileDto) {
-    return this.profilesService.create(createProfileDto);
+  @Post(':id')
+  createProfile(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() profile: CreateProfileDto,
+  ) {
+    return this.profilesService.createProfile(id, profile);
   }
 
   @Get()
-  findAll() {
-    return this.profilesService.findAll();
+  getProfiles() {
+    return this.profilesService.getProfiles();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.profilesService.findOne(+id);
+  getProfile(@Param('id', ParseIntPipe) id: number) {
+    return this.profilesService.getProfile(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.profilesService.update(+id, updateProfileDto);
+  updateProfile(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProfileDto: UpdateProfileDto,
+  ) {
+    return this.profilesService.updateProfile(id, updateProfileDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.profilesService.remove(+id);
+  deleteProfile(@Param('id', ParseIntPipe) id: number) {
+    return this.profilesService.deleteProfile(id);
   }
 }

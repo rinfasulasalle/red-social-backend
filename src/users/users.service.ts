@@ -12,7 +12,6 @@ export class UsersService {
   ) {}
 
   async createUser(user: CreateUserDto) {
-    // confirma su user ya existe
     const userFound = await this.userRepository.findOne({
       where: {
         username: user.username,
