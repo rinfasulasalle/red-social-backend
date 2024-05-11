@@ -69,4 +69,8 @@ export class UsersService {
     const updatedUser = Object.assign(userFound, user);
     return this.userRepository.save(updatedUser);
   }
+
+  findOneByUsername(username: string) {
+    return this.userRepository.findOneBy({ username });
+  }
 }
