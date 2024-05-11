@@ -43,7 +43,15 @@ export class AuthService {
     if (!isPasswordValid) {
       return new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
     }
+    // creacion de payload
+    const payload = { username: userFound.username };
+    const token = await this.jwtService.signAsync(payload);
     // se devuelvo token, no usuario
-    // return userFound;
+    const username = loginDto.username;
+    return {
+      token,
+      username,
+    };
+    // confirmar en jwt.io el token solo el token
   }
 }
