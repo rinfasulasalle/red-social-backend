@@ -4,10 +4,14 @@ import { RegisterDto } from './dto/register.dto';
 
 import * as bcryptjs from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
   //register
   async register(registerDto: RegisterDto) {
     const userFound = await this.usersService.findOneByUsername(
