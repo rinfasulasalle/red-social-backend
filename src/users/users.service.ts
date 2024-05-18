@@ -4,7 +4,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import * as bcryptjs from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
@@ -20,6 +20,7 @@ export class UsersService {
     if (userFound) {
       return new HttpException('User already exists', HttpStatus.CONFLICT);
     }
+    user.password = await bcryptjs.hash(user.password, 10);
     const newUser = this.userRepository.create(user);
     return this.userRepository.save(newUser);
   }
@@ -66,6 +67,7 @@ export class UsersService {
     if (!userFound) {
       return new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+    user.password = await bcryptjs.hash(user.password, 10);
     const updatedUser = Object.assign(userFound, user);
     return this.userRepository.save(updatedUser);
   }

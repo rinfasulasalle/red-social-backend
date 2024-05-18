@@ -27,7 +27,7 @@ export class AuthController {
   ) {
     return this.authService.login(loginDto);
   }
-  @Get('noti')
+  @Get('profile')
   @UseGuards(AuthGuard)
   noti(@Request() req) {
     return req.user;
